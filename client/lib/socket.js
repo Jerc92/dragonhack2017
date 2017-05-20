@@ -246,7 +246,6 @@ socket.on('/muse/elements/horseshoe', function(data){
 socket.on('/muse/batt', function(data){
 	// Set percentage values
     $("#battery i").attr("data-percentage", Math.round(data.values[0] / 100)).parent().attr("data-percentage",  Math.round(data.values[0] / 100));
-
 });
 
 // Get EEG values
