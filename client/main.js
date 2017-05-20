@@ -12,6 +12,14 @@ function shuffle(array) {
   }
   return array;
 }
+function getAvg(grades) {
+  if (grades.length <= 0) {
+    return 0;
+  }
+  return grades.reduce(function (p, c) {
+    return p + c;
+  }) / grades.length;
+}
 
 const videos = shuffle(['5dsGWM5XGdg', 'vEO4WavlXdA', 'VoJ-Ey6q8uM',
   'TneTkj7pChw']);
@@ -42,18 +50,50 @@ function nextVideo() {
 }
 
 function setupEventListeners() {
-  let hasLolled = false;
+  let jawBuffer = [];
+  let faceBuffer = [];
+
+  let jawValues = [];
+  let faceValues = [];
+
   setInterval(() => {
+    let hasLolled = false;
+
+    const avgJaw = getAvg(jawValues);
+    const avgFace = getAvg(faceValues);
+
+    console.log('the avg of jaws:', avgJaw);
+    console.log('the avg of faces:', avgFace);
+
+    if (avgJaw >= 0.35 && avgFace >= 0.2) {
+      hasLolled = true;
+    }
+
+    console.log('The user has', hasLolled ? '' : 'not', 'lolled');
+
     if (!hasLolled) {
       nextVideo();
     }
     hasLolled = false;
+    jawValues = [];
   }, 5000);
 
+
   socket.on('/muse/elements/jaw_clench', function onSocketEvent(data) {
-    console.log(data);
-    if (data.values === 1) {
-      hasLolled = true;
+    jawBuffer.push(data.values);
+    if (jawBuffer.length >= 5) {
+      const jawValue = getAvg(jawBuffer);
+      jawValues.push(jawValue);
+      jawBuffer = [];
+      console.log('jaw:', jawValue);
+    }
+
+    faceBuffer.push(showEmotion());
+    if (faceBuffer.length >= 5) {
+      const faceValue = getAvg(faceBuffer);
+      faceValues.push(faceValue);
+      faceBuffer = [];
+      console.log('face', faceValue);
     }
   });
 }

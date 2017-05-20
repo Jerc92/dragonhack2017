@@ -59,6 +59,8 @@ function drawLoop() {
 	var er = ec.meanPredict(cp);
 	if (er) {
 		happy = er[0].value;
+	} else {
+		happy = 0; // no face detected
 	}
 }
 
@@ -72,5 +74,5 @@ ec.init(emotionModel);
 var emotionData = ec.getBlank();
 
 function showEmotion() {
-	console.log(happy);
+	return happy;
 }
