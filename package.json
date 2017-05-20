@@ -17,9 +17,10 @@
   },
   "homepage": "https://github.com/Jerc92/dragonhack2017#readme",
   "dependencies": {
+    "alexa-app": "^4.0.1",
+    "alexa-sdk": "^1.0.9",
     "express": "^4.12.2",
     "node-muse": "^1.1.0",
-    "socket.io": "^1.3.5",
-    "alexa-app": "^4.0.1"
+    "socket.io": "^1.3.5"
   }
 }
