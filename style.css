@@ -1,16 +1,25 @@
-div {
+#video, #footer {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-div,
+
+#footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	border-radius: 5px;
+	border: 1px solid black;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+h1 {
+	text-align: center;
+}
+
 body,
 html {
     height: 100%;
-    width: 100%;
-}
-body {
-    display: table;
-    height:100%;
     width: 100%;
 }
