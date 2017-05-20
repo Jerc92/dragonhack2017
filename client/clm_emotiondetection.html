@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Face tracker</title>
+		<meta charset="utf-8">
+		<link href="./styles/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<style>
+			video {
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="./lib/clmtrackr.js"></script>
+		<script src="./lib/model_pca_20_svm.js"></script>
+		<script src="./lib/emotion_classifier.js"></script>
+		<script src="./lib/emotionmodel.js"></script>
+		<video id="videoel" width="400" height="300" preload="auto" loop>
+		</video>
+		<script src="./lib/emotion_detector.js"></script>
+	</body>
+</html>
