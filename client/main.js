@@ -13,7 +13,8 @@ function shuffle(array) {
   return array;
 }
 
-const videos = shuffle(['5dsGWM5XGdg', 'vEO4WavlXdA', 'VoJ-Ey6q8uM']);
+const videos = shuffle(['5dsGWM5XGdg', 'vEO4WavlXdA', 'VoJ-Ey6q8uM',
+  'TneTkj7pChw']);
 const youtubeURL = 'https://www.youtube.com/embed/';
 let currentVideoIndex = 0;
 let yt = null;
