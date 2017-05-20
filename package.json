@@ -1,0 +1,19 @@
+{
+  "name": "dragonhack2017",
+  "version": "1.0.0",
+  "description": "dragonhack test project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jerc92/dragonhack2017.git"
+  },
+  "author": "Tomi Sebjanic, Timotej Fartek, Jernej Barbaric",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jerc92/dragonhack2017/issues"
+  },
+  "homepage": "https://github.com/Jerc92/dragonhack2017#readme"
+}
