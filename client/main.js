@@ -65,7 +65,7 @@ function setupEventListeners() {
     console.log('the avg of jaws:', avgJaw);
     console.log('the avg of faces:', avgFace);
 
-    if (avgJaw >= 0.35 && avgFace >= 0.2) {
+    if (avgJaw >= 0.35 || avgFace >= 0.25) {
       hasLolled = true;
     }
 
