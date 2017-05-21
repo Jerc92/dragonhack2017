@@ -21,18 +21,36 @@ function getAvg(grades) {
   }) / grades.length;
 }
 
-const videos = shuffle(['5dsGWM5XGdg', 'vEO4WavlXdA', 'VoJ-Ey6q8uM',
-  'TneTkj7pChw']);
+const videos = shuffle(
+  ['5dsGWM5XGdg', 
+  'vEO4WavlXdA', 
+  'VoJ-Ey6q8uM',
+  'TneTkj7pChw', 
+  'TxyvS85GyqM',
+  'fN6eaOR73SM',
+  'd67OfAAjsgM',
+  '_hnJW-hAp3o',
+  'U4Rk8eVxlyA',
+  'be4cMyVB-4U',
+  'TWzMfzIEVzE',
+  '3LPB-uV0rhs',
+  'eHDn7nz_8iw',
+  'g61LFS504Rw',
+  'b0R0KgEproU',
+  'XWz6F6veXnY',
+  '2A6zAX2QihE'
+  ]);
 const youtubeURL = 'https://www.youtube.com/embed/';
 let currentVideoIndex = 0;
 let yt = null;
 let lolMeter = 0;
+const loadTime = 2000;
 
 window.onload = function() {
   yt = document.getElementById('yt-movie');
   changeVideoSrc();
 
-  setupEventListeners();
+  setTimeout(() => { setupEventListeners() }, loadTime);
 };
 
 function changeVideoSrc() {
