@@ -45,7 +45,7 @@ let currentVideoIndex = 0;
 let yt = null;
 let lolMeter = 0;
 const loadTime = 2000;
-var museConnected = false;
+const lolTime = 15000;
 
 window.onload = function() {
   yt = document.getElementById('yt-movie');
@@ -56,12 +56,20 @@ window.onload = function() {
 };
 
 function updateMuseBar() {
-  if (museConnected) {
-    document.getElementById('footer').style.display = 'block';
-  } else {
-    document.getElementById('footer').style.display = 'none';
-  }
+  // if (museConnected) {
+  //   document.getElementById('footer').style.display = 'inline-block';
+  // } else {
+  //   document.getElementById('footer').style.display = 'none';
+  // }
 }
+
+socket.on('muse_connected', function(data){
+    museConnected = true;
+});
+
+socket.on('muse_disconnected', function(){
+    museConnected = false;
+})
 
 function changeVideoSrc() {
   if (yt !== null) {
@@ -77,6 +85,20 @@ function nextVideo() {
   }
   changeVideoSrc();
 }
+var flashColor = 'red';
+function flashBackground(flash) {
+  if (flash) $('body').addClass('blink');
+  else $('body').removeClass('blink');
+  // isFlashing = true;
+  // setTimeout(() => {
+  //   if (!isFlashing) {
+  //     $('body').css('background-color', flashColor);
+  //     flashColor = flashColor === 'red' ? 'yellow' : 'red';
+  //   }
+  //   isFlashing = false;
+  // }, 50);
+  // $('body').css('background-color', '#2a2d37');
+}
 
 function setupEventListeners() {
   let jawBuffer = [];
@@ -84,26 +106,35 @@ function setupEventListeners() {
 
   let jawValues = [];
   let faceValues = [];
+  var timer = null;
 
-  setInterval(() => {
-    let hasLolled = false;
-
-    const avgJaw = getAvg(jawValues);
-    const avgFace = getAvg(faceValues);
-
-
-
-    console.log('the avg of jaws:', avgJaw);
-    console.log('the avg of faces:', avgFace);
-    
-    if (avgJaw >= 0.35 && avgFace >= 0.3) {
-      hasLolled = true;
-      lolMeter < 100 ? lolMeter += 10 : lolMeter = 100;
+  function updateLolMeter(didLol, lolAmount) {
+    if (didLol) {
+      lolMeter < 100 ? lolMeter += lolAmount : lolMeter = 100;
     } else {
-      lolMeter > 0 ? lolMeter -= 10 : lolMeter = 0;
+      lolMeter > 0 ? lolMeter -= lolAmount : lolMeter = 0;
     }
 
+    if (lolMeter > 50 && timer !== null) {
+      $("#lol-meter").css('background-color', '#82c655');
+      console.log('LOLLING > 50!!');
+      clearInterval(timer);
+      timer = setInterval(processLol, lolTime);
+    } else {
+      $("#lol-meter").css('background-color', '#3bafda');
+    }
     $("#lol-meter").css("width", lolMeter+"%");
+
+    flashBackground(lolMeter > 85);
+  }
+
+
+  function processLol() {
+    let hasLolled = false;
+
+    if (lolMeter >= 50) {
+      hasLolled = true;
+    }
 
     console.log('The user has', hasLolled ? '' : 'not', 'lolled');
 
@@ -113,28 +144,44 @@ function setupEventListeners() {
     hasLolled = false;
     jawValues = [];
     faceValues = [];
-  }, 10000);
+  }
+
+  timer = setInterval(processLol, lolTime);
 
 
   socket.on('/muse/elements/jaw_clench', function onSocketEvent(data) {
     updateMuseBar();
-    if (museConnected) {
-      jawBuffer.push(data.values);
-      if (jawBuffer.length >= 5) {
-        const jawValue = getAvg(jawBuffer);
-        jawValues.push(jawValue);
-        jawBuffer = [];
-        console.log('jaw:', jawValue);
-      }
+    let jawValue = 0;
+    jawBuffer.push(data.values);
+    if (jawBuffer.length >= 5) {
+      jawValue = getAvg(jawBuffer);
+      jawValues.push(jawValue);
+      jawBuffer = [];
+      console.log('jaw:', jawValue);
+
+      updateLolMeter(jawValue >= 0.35, 4);
     }
   });
+
+  let prevFaceValue = -1;
+
   setInterval(() => {
     faceBuffer.push(showEmotion());
+    let faceValue = 0;
     if (faceBuffer.length >= 5) {
-      const faceValue = getAvg(faceBuffer);
-      faceValues.push(faceValue);
+      faceValue = getAvg(faceBuffer);
+
+      if (faceValue !== prevFaceValue) {
+        faceValues.push(faceValue);
+        console.log('face', faceValue);
+      } else {
+        faceValues.push(0);
+        console.log('face', 0);
+      }
+      prevFaceValue = faceValue;
       faceBuffer = [];
-      console.log('face', faceValue);
+
+      updateLolMeter(faceValue >= 0.25, 10);
     }
   }, 100);
 }

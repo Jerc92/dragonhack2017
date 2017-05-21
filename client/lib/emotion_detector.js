@@ -56,6 +56,13 @@ function drawLoop() {
 	//psrElement.innerHTML = "score :" + ctrack.getScore().toFixed(4);
 	var cp = ctrack.getCurrentParameters();
 
+	// if ( no face detected) {
+	// 	happy = 0;
+	// } else { 
+	// 	...
+	// }
+
+
 	var er = ec.meanPredict(cp);
 	if (er) {
 		happy = er[0].value;

@@ -51,3 +51,15 @@ html {
   height: 100%;
   width: 100%;
 }
+
+.blink {
+  /*font:2vw monospace;*/
+  /*justify-content:center;*/
+  /*align-items:center;*/
+  /*flex:1;*/
+  animation:strobe 200ms steps(1,end) infinite;
+  transition:flex .3s;;
+}
+@keyframes strobe {
+  50% { background-color:darkred; color: yellow;}
+}

@@ -196,7 +196,6 @@ function setTableValue(opath, values) {
  */
 socket.on('muse_connected', function(data){
 	setState("connected");
-    museConnected = true;
 });
 
 socket.on('muse_uncertain', function(){
@@ -205,7 +204,6 @@ socket.on('muse_uncertain', function(){
 
 socket.on('muse_disconnected', function(){
 	setState("disconnected");
-    museConnected = false;
 })
 
 socket.on('disconnect', function(){
