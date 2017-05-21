@@ -11,8 +11,12 @@
 </head>
 <body class="disconnected">
   <div class="container">
-    <header id="header" class="">
+    <header id="header">
       <h1>Laugh-o-meter 3000</h1>
+      <div class="progress">
+        <div id="lol-meter" class="progress-bar" role="progressbar" style="width:0%">
+        </div>
+      </div>
     </header><!-- /header -->
     <div id="video">
       <iframe id="yt-movie" width="560" height="315" src="loading.html" frameborder="0" allowfullscreen></iframe>
@@ -36,6 +40,9 @@
         <div id="readability-bar-3" class="progress-bar progress-bar-success" role="progressbar" style="width: 0%">
           
         </div>
+      </div>
+      <div id="faceRecognitionCheck" class="alert alert-warning" role="alert">
+        Face recognition.
       </div>
     </footer>
   </div>

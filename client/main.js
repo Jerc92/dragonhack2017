@@ -43,6 +43,7 @@ const videos = shuffle(
 const youtubeURL = 'https://www.youtube.com/embed/';
 let currentVideoIndex = 0;
 let yt = null;
+let lolMeter = 0;
 const loadTime = 2000;
 var museConnected = false;
 
@@ -90,12 +91,19 @@ function setupEventListeners() {
     const avgJaw = getAvg(jawValues);
     const avgFace = getAvg(faceValues);
 
+
+
     console.log('the avg of jaws:', avgJaw);
     console.log('the avg of faces:', avgFace);
-
-    if (avgJaw >= 0.35 || avgFace >= 0.25) {
+    
+    if (avgJaw >= 0.35 && avgFace >= 0.3) {
       hasLolled = true;
+      lolMeter < 100 ? lolMeter += 10 : lolMeter = 100;
+    } else {
+      lolMeter > 0 ? lolMeter -= 10 : lolMeter = 0;
     }
+
+    $("#lol-meter").css("width", lolMeter+"%");
 
     console.log('The user has', hasLolled ? '' : 'not', 'lolled');
 
