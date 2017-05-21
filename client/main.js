@@ -44,13 +44,23 @@ const youtubeURL = 'https://www.youtube.com/embed/';
 let currentVideoIndex = 0;
 let yt = null;
 const loadTime = 2000;
+var museConnected = false;
 
 window.onload = function() {
   yt = document.getElementById('yt-movie');
   changeVideoSrc();
 
   setTimeout(() => { setupEventListeners() }, loadTime);
+  updateMuseBar();
 };
+
+function updateMuseBar() {
+  if (museConnected) {
+    document.getElementById('footer').style.display = 'block';
+  } else {
+    document.getElementById('footer').style.display = 'none';
+  }
+}
 
 function changeVideoSrc() {
   if (yt !== null) {
@@ -94,18 +104,23 @@ function setupEventListeners() {
     }
     hasLolled = false;
     jawValues = [];
-  }, 5000);
+    faceValues = [];
+  }, 10000);
 
 
   socket.on('/muse/elements/jaw_clench', function onSocketEvent(data) {
-    jawBuffer.push(data.values);
-    if (jawBuffer.length >= 5) {
-      const jawValue = getAvg(jawBuffer);
-      jawValues.push(jawValue);
-      jawBuffer = [];
-      console.log('jaw:', jawValue);
+    updateMuseBar();
+    if (museConnected) {
+      jawBuffer.push(data.values);
+      if (jawBuffer.length >= 5) {
+        const jawValue = getAvg(jawBuffer);
+        jawValues.push(jawValue);
+        jawBuffer = [];
+        console.log('jaw:', jawValue);
+      }
     }
-
+  });
+  setInterval(() => {
     faceBuffer.push(showEmotion());
     if (faceBuffer.length >= 5) {
       const faceValue = getAvg(faceBuffer);
@@ -113,5 +128,5 @@ function setupEventListeners() {
       faceBuffer = [];
       console.log('face', faceValue);
     }
-  });
+  }, 100);
 }
