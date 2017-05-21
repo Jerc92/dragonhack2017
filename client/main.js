@@ -174,9 +174,13 @@ function setupEventListeners() {
       if (faceValue !== prevFaceValue) {
         faceValues.push(faceValue);
         console.log('face', faceValue);
+        $("#faceRecognitionCheck").removeClass("alert-warning");
+        $("#faceRecognitionCheck").addClass("alert-success");
       } else {
         faceValues.push(0);
         console.log('face', 0);
+        $("#faceRecognitionCheck").addClass("alert-warning");
+        $("#faceRecognitionCheck").removeClass("alert-success");
       }
       prevFaceValue = faceValue;
       faceBuffer = [];
