@@ -6,6 +6,8 @@
 
 #header {
   padding: 10px;
+  text-align: center;
+  position: relative;
 }
 
 #footer {
@@ -18,13 +20,29 @@
   box-shadow: 0 0 10px #888888;
 }
 
-.progress {
+#footer .progress, #faceRecognitionCheck {
   width: 100%;
   margin: 10px;
 }
 
+#faceRecognitionCheck {
+  font-size: 0.8em;
+  padding: 0;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#header .progress {
+  height: 70px;
+}
+
 h1 {
-  text-align: center;
+  position:absolute;
+  left: 0;
+  right: 0;
+  margin: 6px auto;
 }
 
 body,
